@@ -1,80 +1,67 @@
-import Image from "next/image";
+"use client";
+import EntityRelationDiagram from "@/components/EntityRelationDiagram";
+import erdData from "../../erd.json";
 
 export default function Home() {
-  const erdData = [
-    {
-      model_name: "user",
-      fields: [
-        { key: "id", type: "int", value: "PK" },
-        {
-          key: "username",
-          type: "string",
-          value: "FK",
-          relation: {
-            model_name: "user_todo",
-            type: "one_to_one", //one_to_one, many_to_many, one_many
-          },
-        },
-        { key: "email", type: "string", value: "required" },
-      ],
-    },
+  // console.log(erdData);
 
-    {
-      model_name: "user_todo",
-      fields: [
-        { key: "id", type: "int", value: "PK" },
-        { key: "user_id", type: "string", value: "FK" },
-      ],
-    },
+  function convertGivenDataToGraphData(givenData) {
+    const graphData = {
+      nodes: [],
+      edges: [],
+    };
 
-    {
-      model_name: "task",
-      fields: [
-        { key: "id", type: "int", value: "PK" },
-        { key: "todo_id", type: "string", value: "FK" },
-        { key: "email", type: "string", value: "required" },
-      ],
-    },
-  ];
+    // Iterate through the models in givenData and map them to nodes
+    for (const app in givenData) {
+      console.log(app);
+      graphData.nodes.push({
+        data: {
+          id: app,
+          label: app,
+          type: "model",
+        },
+      });
+      // for (const model of givenData[app]) {
+      //   graphData.nodes.push({
+      //     data: {
+      //       id: model.name,
+      //       label: model.name,
+      //       type: "model",
+      //     },
+      //   });
+      // }
+    }
 
-  const entity_relation_diagram = [
-    {
-      model_name: "user",
-      fields: [
-        {
-          field_name: "id",
-          field_type: "int",
-          relation_type: "PK",
-        },
-        {
-          field_name: "username",
-          field_type: "string",
-          relation_type: "FK",
-          relation_with: {
-            model_name: "user_todo",
-            type: "one_to_one", //one_to_one, many_to_many, one_many
-          },
-        },
-        {
-          field_name: "email",
-          field_type: "string",
-          value: "required",
-        },
-      ],
-    },
+    // Iterate again to map relationships (edges) between models
+    for (const app in givenData) {
+      for (const model of givenData[app]) {
+        const fields = model.fields;
+        for (const fieldName in fields) {
+          const field = fields[fieldName];
+          if (field.type === "ForeignKey" || field.type === "ManyToManyField") {
+            // Add an edge between models
+            graphData.edges.push({
+              data: {
+                source: model.name,
+                target: field.reference_field,
+                label: fieldName,
+              },
+            });
+          }
+        }
+      }
+    }
 
-    {
-      model_name: "user_todo",
-      fields: [
-        {
-          field_name: "user_id",
-          field_type: "int",
-          relation_type: "FK",
-        },
-        { field_name: "task_id", field_type: "int", relation_type: "FK" },
-      ],
-    },
-  ];
+    return graphData;
+  }
 
-  return <div>home</div>;
+  const convertedGraphData = convertGivenDataToGraphData(erdData);
+
+  // console.log(convertedGraphData);
+
+  return (
+    <div>
+      <EntityRelationDiagram convertedGraphData={convertedGraphData} />
+    </div>
+  );
 }
