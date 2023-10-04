@@ -984,6 +984,100 @@
           "db_index": true
         }
       }
+    },
+    {
+      "name": "Place",
+      "fields": {
+        "restaurant": {
+          "type": "OneToOneField",
+          "reference_field": "Restaurant",
+          "null": true,
+          "editable": false,
+          "parent_link": false
+        },
+        "id": {
+          "type": "BigAutoField",
+          "blank": true,
+          "null": false,
+          "primary_key": true,
+          "unique": true,
+          "verbose_name": "ID",
+          "help_text": "",
+          "editable": true,
+          "db_column": null,
+          "db_index": false
+        },
+        "name": {
+          "type": "CharField",
+          "blank": false,
+          "null": false,
+          "primary_key": false,
+          "unique": false,
+          "verbose_name": "name",
+          "help_text": "",
+          "editable": true,
+          "auto_created": false,
+          "db_column": null,
+          "db_index": false,
+          "max_length": 50,
+          "choices": null
+        },
+        "address": {
+          "type": "CharField",
+          "blank": false,
+          "null": false,
+          "primary_key": false,
+          "unique": false,
+          "verbose_name": "address",
+          "help_text": "",
+          "editable": true,
+          "auto_created": false,
+          "db_column": null,
+          "db_index": false,
+          "max_length": 80,
+          "choices": null
+        }
+      }
+    },
+    {
+      "name": "Restaurant",
+      "fields": {
+        "place": {
+          "type": "OneToOneField",
+          "reference_field": "Place",
+          "blank": false,
+          "null": false,
+          "primary_key": true,
+          "unique": true,
+          "verbose_name": "place",
+          "help_text": "",
+          "editable": true,
+          "db_column": null,
+          "db_index": true
+        },
+        "serves_hot_dogs": {
+          "type": "BooleanField",
+          "blank": false,
+          "null": false,
+          "primary_key": false,
+          "verbose_name": "serves hot dogs",
+          "help_text": "",
+          "editable": true,
+          "db_column": null,
+          "db_index": false
+        },
+        "serves_pizza": {
+          "type": "BooleanField",
+          "blank": false,
+          "null": false,
+          "primary_key": false,
+          "verbose_name": "serves pizza",
+          "help_text": "",
+          "editable": true,
+          "db_column": null,
+          "db_index": false
+        }
+      }
     }
   ]
 }
