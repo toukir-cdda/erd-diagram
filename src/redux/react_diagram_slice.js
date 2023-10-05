@@ -4,7 +4,7 @@ const initialState = {
   ERD: {},
 };
 
-const erdSlice = createSlice({
+const react_diagram_slice = createSlice({
   name: "ERD",
   initialState,
   reducers: {
@@ -14,5 +14,5 @@ const erdSlice = createSlice({
   },
 });
 
-export const { setErdData } = erdSlice.actions;
-export default erdSlice.reducer;
+export const { setErdData } = react_diagram_slice.actions;
+export default react_diagram_slice.reducer;

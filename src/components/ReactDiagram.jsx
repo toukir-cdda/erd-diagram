@@ -140,9 +140,9 @@ const ReactDiagram = ({ demo }) => {
 
   const sch = organizeData2(erdData);
 
-  console.log(sch);
+  // console.log(sch);
 
-  const [schema, { onChange, addNode, connect }] = useSchema(sch);
+  const [schema, { onChange, addNode, connect }] = useSchema(demo);
 
   const getChildNode = () => {
     schema?.nodes?.map((childNode, idx) => {
