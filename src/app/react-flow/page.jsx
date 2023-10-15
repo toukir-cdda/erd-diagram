@@ -44,7 +44,7 @@ const Page = () => {
 
   return (
     <div style={{ height: "100vh" }}>
-      <ReactFlow
+      {/* <ReactFlow
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
@@ -55,7 +55,7 @@ const Page = () => {
         attributionPosition="top-right"
       >
         <Background />
-      </ReactFlow>
+      </ReactFlow> */}
       <ERDFlowDiagram />
     </div>
   );
